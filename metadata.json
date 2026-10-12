@@ -1,0 +1,6 @@
+{
+  "name": "AgentShield",
+  "description": "Evidence-Driven AI Incident Investigator & Remediation Platform powered by NVIDIA Nemotron on Nebius Token Factory",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

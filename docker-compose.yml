@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  agentshield-backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - NEBIUS_API_KEY=${NEBIUS_API_KEY:-your-nebius-token-factory-api-key}
+      - NEBIUS_BASE_URL=${NEBIUS_BASE_URL:-https://api.studio.nebius.ai/v1}
+      - NEBIUS_MODEL=${NEBIUS_MODEL:-nvidia/Llama-3.1-Nemotron-70B-Instruct-HF}
+      - AI_PROVIDER=${AI_PROVIDER:-mock}
+      - SQLITE_DB_PATH=/app/data/incidents.db
+    volumes:
+      - ./data:/app/data
+
+  agentshield-fullstack:
+    image: node:22-slim
+    working_dir: /app
+    volumes:
+      - .:/app
+    ports:
+      - "3000:3000"
+    environment:
+      - NEBIUS_API_KEY=${NEBIUS_API_KEY}
+      - NEBIUS_BASE_URL=https://api.studio.nebius.ai/v1
+      - NEBIUS_MODEL=nvidia/Llama-3.1-Nemotron-70B-Instruct-HF
+      - AI_PROVIDER=mock
+      - PORT=3000
+    command: npm run dev
